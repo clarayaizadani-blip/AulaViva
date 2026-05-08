@@ -1,4 +1,6 @@
 <!DOCTYPE html>
+<h1 id="texto">Cargando...</h1>
+<button onclick="guardarTexto()">Probar Firebase</button>
 <html lang="es">
 <head>
 <meta charset="UTF-8"/>
@@ -13,50 +15,6 @@
   --purple:#EEEDFE;--purple2:#534AB7;--blue:#E6F1FB;--blue2:#185FA5;
 }
 *{box-sizing:border-box;margin:0;padding:0;}
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-  import { getFirestore, doc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-
-  const firebaseConfig = {
-    // Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
-  apiKey: "AIzaSyCOuFQvY5XkF9cRAzwb3g73afi4YlTt4bU",
-  authDomain: "aulaviva-8eba2.firebaseapp.com",
-  projectId: "aulaviva-8eba2",
-  storageBucket: "aulaviva-8eba2.firebasestorage.app",
-  messagingSenderId: "752586937283",
-  appId: "1:752586937283:web:0ccba30ae76dc4f6236376",
-  measurementId: "G-2NBWBLKTSR"
-};
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
-  };
-
-  const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
-
-  async function guardarTexto() {
-    await setDoc(doc(db, "web", "texto"), {
-      contenido: "Hola desde Firebase"
-    });
-  }
-
-  onSnapshot(doc(db, "web", "texto"), (docSnap) => {
-    if (docSnap.exists()) {
-      document.getElementById("texto").innerText = docSnap.data().contenido;
-    }
-  });
-
-  window.guardarTexto = guardarTexto;
 </script>body{font-family:'DM Sans',sans-serif;background:var(--gray1);color:var(--gray6);}
 a{text-decoration:none;color:inherit;}
 
@@ -946,5 +904,37 @@ function showSec(id){
 
 renderClases();renderRec();renderTrab();renderAvisos();
 </script>
-</body>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getFirestore, doc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "TU_API_KEY",
+  authDomain: "aulaviva-8eba2.firebaseapp.com",
+  projectId: "aulaviva-8eba2",
+  storageBucket: "aulaviva-8eba2.appspot.com",
+  messagingSenderId: "752586937283",
+  appId: "1:752586937283:web:0ccba30ae76dc4f6236376"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+// Guardar dato en Firebase
+async function guardarTexto() {
+  await setDoc(doc(db, "web", "texto"), {
+    contenido: "Hola desde Firebase"
+  });
+}
+
+// Leer en tiempo real
+onSnapshot(doc(db, "web", "texto"), (docSnap) => {
+  if (docSnap.exists()) {
+    const el = document.getElementById("texto");
+    if (el) el.innerText = docSnap.data().contenido;
+  }
+});
+
+window.guardarTexto = guardarTexto;
+</script></body>
 </html>
